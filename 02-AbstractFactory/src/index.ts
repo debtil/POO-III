@@ -9,10 +9,10 @@ let factory : ITransportFactory
 
 switch (currentCompany) {
     case Company.UBER:
-        factory = new UberFactory
+        factory = new UberFactory();
         break;
     case Company.NINENINE:
-        factory = new NineNineFactory
+        factory = new NineNineFactory();
         break;
     default :
     console.log("Companhia não definida");
