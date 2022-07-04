@@ -1,4 +1,5 @@
 export default{
     UBER : "UBER",
-    NINENINE: "NINENINE"
+    NINENINE: "NINENINE",
+    LIME: "LIME"
 }
