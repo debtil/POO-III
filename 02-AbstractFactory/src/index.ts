@@ -5,6 +5,7 @@ import ITransportFactory from "./vehicle/factorys/interfaces/ITransportFactory";
 import LimeTransportFactory from "./vehicle/factorys/LimeFactory";
 import NineNineFactory from "./vehicle/factorys/NineNineFactory";
 import UberFactory from "./vehicle/factorys/UberFactory";
+import Car from "./vehicle/land/Car";
 
 const currentCompany = Company.NINENINE;
 let factory : ITransportFactory
@@ -26,5 +27,5 @@ switch (currentCompany) {
 const client = new Client(factory!);
 client.startRoute();
 
-// lime cria drone e scooter 
+
 // passar o veiculo como parametro na fabrica 
