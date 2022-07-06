@@ -24,8 +24,5 @@ switch (currentCompany) {
     console.log("Companhia não definida");
 }
 
-const client = new Client(factory!);
-client.startRoute();
-
-
-// passar o veiculo como parametro na fabrica 
+const client = new Client(factory!, "Ambos");
+client.startRoute(); 
