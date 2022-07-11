@@ -11,6 +11,8 @@ console.log("Criando um veículo");
 console.log("Tipo: " + sedan.vehicleType);
 console.log("Rodas: " + sedan.wheelsTotal);
 
+builder.reset();
+
 director.constructTruck();
 let truck : Vehicle  = builder.getVehicle();
 console.log("\nCriando um veículo");
