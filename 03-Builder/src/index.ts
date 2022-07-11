@@ -18,3 +18,11 @@ let truck : Vehicle  = builder.getVehicle();
 console.log("\nCriando um veículo");
 console.log("Tipo: " + truck.vehicleType);
 console.log("Rodas: " + truck.wheelsTotal);
+
+builder.reset();
+
+director.constructMoto();
+let moto : Vehicle  = builder.getVehicle();
+console.log("\nCriando um veículo");
+console.log("Tipo: " + moto.vehicleType);
+console.log("Rodas: " + moto.wheelsTotal);

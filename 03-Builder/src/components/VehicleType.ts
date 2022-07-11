@@ -3,7 +3,8 @@ enum VehicleType{
     SPORTCAR = "SPORTCAR",
     SUV = "SUV",
     PICKUPTRUCK = "PICKUPTRUCK",
-    TRUCK = "TRUCK"
+    TRUCK = "TRUCK",
+    MOTOCYCLE = "MOTOCYCLE"
 }
 
 export default VehicleType;
