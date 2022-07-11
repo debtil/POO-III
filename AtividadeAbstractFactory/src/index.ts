@@ -4,7 +4,7 @@ import IAiqFomeDelivery from "./food/factorys/IAiqFomeDelivery";
 import IFoodDelivery from "./food/factorys/IFoodDelivery";
 import IDeliveryFactory from "./food/factorys/interfaces/IDeliveryFactory";
 
-const cCompany = Company.AIQFOME;
+const cCompany = Company.IFOOD;
 let factory : IDeliveryFactory;
 
 switch (cCompany){
