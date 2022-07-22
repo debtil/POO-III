@@ -1,2 +1,4 @@
 **/node_modules
 **/02-AbstractFactory
+**/03-Builder
+**/04-Adapter
