@@ -6,3 +6,5 @@ const encomenda : Icorreio = new TransportadoraAdapter(new Transportadora);
 
 encomenda.sendCorreios();
 encomenda.receiveCorreios();
+
+
