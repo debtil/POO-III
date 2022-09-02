@@ -1,5 +1,7 @@
 {
-  "name": "ionic-app-base",
-  "integrations": {},
+  "name": "AppMusicas",
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
