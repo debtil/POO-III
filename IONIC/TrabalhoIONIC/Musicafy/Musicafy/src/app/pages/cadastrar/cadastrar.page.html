@@ -1,9 +1,57 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>cadastrar</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>MusicaFy</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title>Cadastro</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
+ <!-- <ion-list>
+    <form [formGroup]="formCadastrar" (ngSubmit)="submitForm()">
+        <ion-item><ion-input placeholder="Nome" formControlName="nome"></ion-input></ion-item>
+        <ion-item *ngIf="((errorControl.nome.touched) || (errorControl.nome.dirty) && errorControl.nome.errors)">
+          <span *ngIf="errorControl.nome.errors?.required">Nome é Obrigatório!</span>
+        </ion-item>
+
+        <ion-item><ion-input placeholder="Telefone" formControlName="telefone" [brmasker]="{mask:'(00)00000-0000', len:14}"></ion-input></ion-item>
+        <ion-item *ngIf="((errorControl.telefone.touched) || (errorControl.telefone.dirty) && errorControl.telefone.errors)">
+          <span *ngIf="errorControl.telefone.errors?.required">Telefone é Obrigatório!</span>
+          <span *ngIf="errorControl.telefone.errors?.minlength">Telefone precisa ter 10 caracteres</span>
+        </ion-item>
+        
+        <ion-item>
+          <ion-select placeholder="Genero" formControlName="genero">
+            <ion-select-option value="Masculino">Maculino</ion-select-option>
+            <ion-select-option value="Feminino">Feminino</ion-select-option>
+            <ion-select-option value="não declarado">Não declarar</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="((errorControl.genero.touched) || (errorControl.genero.dirty) && errorControl.genero.errors)">
+          <span *ngIf="errorControl.genero.errors?.required">Gênero é Obrigatório!</span>
+        </ion-item>
+
+        <ion-item>
+          <ion-datetime-button datetime="datetime"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime" formControlName="dataNascimento" max="{{data}}" presentation="date"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+        </ion-item>
+        <ion-item *ngIf="((errorControl.dataNascimento.touched) || (errorControl.dataNascimento.dirty) && errorControl.dataNascimento.errors)">
+          <span *ngIf="errorControl.dataNascimento.errors?.required">Data de Nascimento é Obrigatório!</span>
+        </ion-item>
+
+      <ion-button expand="block" type="submit" color="secondary">Cadastrar</ion-button>
+    </form>
+  </ion-list>
+-->
 </ion-content>
