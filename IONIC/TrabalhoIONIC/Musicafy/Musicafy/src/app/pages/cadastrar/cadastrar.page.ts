@@ -12,7 +12,7 @@ import { MusicaService } from 'src/app/services/musica.service';
 export class CadastrarPage implements OnInit {
   formCadastro: FormGroup;
   isSubmitted: boolean = false;
-  dados: string;
+  data: string;
 
   constructor(private formBuilder: FormBuilder, private alertController: AlertController, private router: Router, private musicaService: MusicaService) { }
 
@@ -25,9 +25,9 @@ export class CadastrarPage implements OnInit {
       anoLancamento: ["", Validators.required],
       plataforma: ["", Validators.required],
       avaliacao: ["", Validators.required, Validators.max(2)]});
-      this.dados = new Date().toISOString();
+      this.data = new Date().toISOString();
   }
-  get errorCOntrol(){
+  get errorControl(){
     return this.formCadastro.controls;
   }
 

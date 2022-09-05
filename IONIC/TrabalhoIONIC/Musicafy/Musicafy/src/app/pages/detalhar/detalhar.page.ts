@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Musica } from 'src/app/models/musica';
 
 @Component({
   selector: 'app-detalhar',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./detalhar.page.scss'],
 })
 export class DetalharPage implements OnInit {
-
+  musicas: Musica[];
   constructor() { }
 
   ngOnInit() {
