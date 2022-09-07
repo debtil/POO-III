@@ -6,9 +6,9 @@ export class Musica {
     private _genero: string;
     private _anoLancamento: string;
     private _plataforma: string;
-    private _avaliacao: string;
+    private _gravadora: string;
     
-    constructor(nome: string, artista: string, album: string, genero: string, anoLancamento: string, plataforma: string, avaliacao: string){
+    constructor(nome: string, artista: string, album: string, genero: string, anoLancamento: string, plataforma: string, gravadora: string){
         let key = new Date()
         this._id = key.getTime();
         this._nome = nome;
@@ -17,7 +17,7 @@ export class Musica {
         this._genero = genero;
         this._anoLancamento = anoLancamento;
         this._plataforma = plataforma;
-        this._avaliacao = avaliacao;
+        this._gravadora = gravadora;
     }
 
     public get id(): string {
@@ -72,11 +72,11 @@ export class Musica {
         this._plataforma = value;
     }
 
-    public get avaliacao(): string {
-        return this._avaliacao;
+    public get gravadora(): string {
+        return this._gravadora;
     }
 
-    public set avaliacao(value: string) {
-        this._avaliacao = value;
+    public set gravadora(value: string) {
+        this._gravadora = value;
     }
 }

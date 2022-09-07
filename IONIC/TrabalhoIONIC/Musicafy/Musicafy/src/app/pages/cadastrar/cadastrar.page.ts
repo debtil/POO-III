@@ -18,13 +18,13 @@ export class CadastrarPage implements OnInit {
 
   ngOnInit() {
     this.formCadastro = this.formBuilder.group({
-      nome: ["", Validators.required],
-      artista: ["", Validators.required],
-      album: ["", Validators.required],
-      genero: ["", Validators.required],
-      anoLancamento: ["", Validators.required],
-      plataforma: ["", Validators.required],
-      avaliacao: ["", Validators.required, Validators.max(2)]});
+      nome: ["", [Validators.required]],
+      artista: ["", [Validators.required]],
+      album: ["", [Validators.required]],
+      genero: ["", [Validators.required]],
+      anoLancamento: ["", [Validators.required]],
+      plataforma: ["", [Validators.required]],
+      gravadora: ["", [Validators.required]]});
       this.data = new Date().toISOString();
   }
   get errorControl(){
