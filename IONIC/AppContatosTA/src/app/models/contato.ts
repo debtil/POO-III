@@ -1,5 +1,5 @@
 export class Contato {
-    private _id: any;
+    private _id: string;
     private _nome: string;
     private _telefone: number;
     private _genero: string;
@@ -7,15 +7,13 @@ export class Contato {
     
 
     constructor(nome: string, telefone: number, genero: string, dataNascimento: string) {
-        let chave = new Date;
-        this._id = chave.getTime();
         this._nome = nome;
         this._telefone = telefone;
         this._genero = genero;
         this._dataNascimento = dataNascimento;
     }
 
-    public get id(): any {
+    public get id(): string {
         return this._id;
     }
 
