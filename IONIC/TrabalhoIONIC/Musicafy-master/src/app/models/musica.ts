@@ -1,5 +1,5 @@
 export class Musica {
-  private _id: any;
+  private _id: string;
   private _nome: string;
   private _cantor: string;
   private _genero: string;
@@ -12,8 +12,6 @@ export class Musica {
   constructor(nome: string, cantor: string,
     nomeAlbum: string, album: string, genero: string,
     plataforma: string, nota: number, anoLancamento: string){
-    let chave = new Date;
-    this._id = chave.getTime();
     this._nome = nome;
     this._cantor = cantor;
     this._nomeAlbum = nomeAlbum;
@@ -24,7 +22,7 @@ export class Musica {
     this._anoLancamento = anoLancamento;
   }
 
-  public get id(): any{
+  public get id(): string{
     return this._id;
   }
 
