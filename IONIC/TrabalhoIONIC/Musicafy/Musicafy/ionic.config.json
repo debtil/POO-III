@@ -1,7 +1,0 @@
-{
-  "name": "Musicafy",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
