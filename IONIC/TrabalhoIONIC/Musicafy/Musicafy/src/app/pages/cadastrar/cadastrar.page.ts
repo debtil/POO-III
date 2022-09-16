@@ -45,6 +45,7 @@ export class CadastrarPage implements OnInit {
     this.musicaService.addMusica(this.formCadastro.value);
     this.presentAlert("MusicaFy", "Sucesso", "Música cadastrada com sucesso!");
     this.router.navigate(['/detalhar']);
+    console.log(this.formCadastro.value)
   }
 
 

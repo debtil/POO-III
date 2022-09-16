@@ -43,16 +43,15 @@ export class InfoPage implements OnInit {
   }
 
   editar(){
-    if(this.validar(this.nome) && this.validar(this.artista) && this.validar(this.album) && this.validar(this.genero)
-    && this.validar(this.anoLancamento) && this.validar(this.plataforma) && this.validar(this.gravadora)){
+    if(this.validar(this.nome) && (this.validar(this.artista)) && (this.validar(this.album)) && (this.validar(this.genero)) && (this.validar(this.anoLancamento)) && (this.validar(this.plataforma)) && (this.validar(this.gravadora))){
       if(this.musicaService.editar(this.musica, this.nome, this.artista, this.album, this.genero, this.anoLancamento, this.plataforma, this.gravadora)){
-        this.presentAlert("MusicaFY", "Sucesso", "Edição realizada com sucesso!");
-        this.router.navigate(["/folder/folder"]);
+        this.presentAlert("MusicaFy", "Sucesso", "Música editada");
+        this.router.navigate(["folder/folder"]);
       }else{
         this.presentAlert("MusicaFy", "Erro", "Música não encontrada!");
       }
     }else{
-      this.presentAlert("MusicaFy", "Erro", "Todos os campos são obrigatórios!");
+      this.presentAlert("MúsicaFy", "Erro", "Todos os campos são obrigatórios!");
     }
   }
 
@@ -64,6 +63,7 @@ export class InfoPage implements OnInit {
     if(this.musicaService.excluir(this.musica)){
       this.presentAlert("MusicaFy", "Sucesso", "Exclusão realizada com sucesso!");
       this.router.navigate(["/detalhar"]);
+      console.log(this.musica);
     }else{
       this.presentAlert("MusicaFy", "Erro", "Música não encontrada!");
     }
@@ -73,7 +73,6 @@ export class InfoPage implements OnInit {
     if(!campo){
       return false;
     }
-
     return true;
   }
 
@@ -102,7 +101,7 @@ export class InfoPage implements OnInit {
     {
       text: 'Confirmar',
       handler: () => {
-        this.excluirMusica();
+         this.excluirMusica();
       }
     }],
     });

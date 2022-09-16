@@ -40,7 +40,7 @@ export class MusicaService {
   public excluir(musica: Musica): boolean {
     for(let i = 0; i < this._musicas.length; i++){
       if(this._musicas[i].id == musica.id){
-        this._musicas.slice(i, 1);
+        this._musicas.splice(i, 1);
         return true;
       }
     }

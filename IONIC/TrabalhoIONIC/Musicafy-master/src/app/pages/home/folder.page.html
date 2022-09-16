@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+      <ion-toolbar>
+        <ion-title size="large" (click)="cancel()" class="douradoTitulo">Musicafy</ion-title>
+      </ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+<h1></h1>
+<h2></h2>
+  <ion-list>
+    <ion-item-sliding *ngFor="let musica of musicas; index as i">
+        <ion-item>
+          <ion-label><b>{{i+1}}</b></ion-label>
+          <ion-label (click)="irParaConteudo(musica)" class="nomeMusica">{{musica.nome}}</ion-label>
+        </ion-item>
+      </ion-item-sliding>
+  </ion-list>
+</ion-content>

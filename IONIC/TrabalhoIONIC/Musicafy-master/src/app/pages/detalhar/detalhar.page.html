@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+      <ion-toolbar>
+        <ion-title size="large" (click)="cancel()" class="douradoTitulo">Musicafy</ion-title>
+      </ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen] = "true">
+  <ion-item><ion-label size="large">Detalhes da Música</ion-label></ion-item>
+  <ion-list>
+    <ion-item>
+      <ion-label>Habilitar Edição</ion-label>
+      <ion-toggle color="success"
+      (ionChange)="alterarEdicao()"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-input disabled="{{edicao}}" placeholder="Nome" [(ngModel)]="nome"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input disabled="{{edicao}}" placeholder="Cantor" [(ngModel)]="cantor"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-select disabled="{{edicao}}" placeholder="Album" [(ngModel)]="nomeAlbum">
+        <ion-select-option value="Single">Single</ion-select-option>
+        <ion-select-option value="Album">Album</ion-select-option>
+      </ion-select>
+      <ion-input disabled="{{edicao}}" *ngIf="(this.nomeAlbum=='Album')" [(ngModel)]="album" class="local"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-select disabled="{{edicao}}"  placeholder="Genero:" [(ngModel)]="genero">
+        <ion-select-option value="Pagode">Pagode</ion-select-option>
+        <ion-select-option value="Rap">Rap</ion-select-option>
+        <ion-select-option value="Rock">Rock</ion-select-option>
+        <ion-select-option value="HipHop">Hip Hop</ion-select-option>
+        <ion-select-option value="PoP">PoP</ion-select-option>
+        <ion-select-option value="Lofi">Lofi</ion-select-option>
+        <ion-select-option value="Jazz">Jazz</ion-select-option>
+        <ion-select-option value="Reggae">Reggae</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-select disabled="{{edicao}}"  placeholder="Plataforma:" [(ngModel)]="plataforma" [multiple]="true">
+        <ion-select-option value="Spotify">Spotify</ion-select-option>
+        <ion-select-option value="Youtube">Youtube Music</ion-select-option>
+        <ion-select-option value="Deezer">Deezer</ion-select-option>
+        <ion-select-option value="Amazon">Amazon Music</ion-select-option>
+        <ion-select-option value="Tidal">Tidal</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-input disabled="{{edicao}}" placeholder="Nota [0-10]" [(ngModel)]="nota"></ion-input>
+    </ion-item>
+    <ion-item disabled="{{edicao}}">
+      <ion-label>Ano de lancamento:</ion-label>
+      <ion-datetime-button disabled="{{edicao}}"  datetime="datetime" slot="end"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="datetime" max="{{data}}" presentation="year" [(ngModel)]="anoLancamento"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+  </ion-list>
+  <h1></h1>
+  <ion-button disabled="{{edicao}}" shape="round" expand="block" (click)="editar()" color="tertiary"> <b class="preto">Salvar</b></ion-button>
+  <ion-button  disabled="{{edicao}}"  shape="round" expand="block" (click)="excluir()" color="warning"><b class="preto">Excluir</b></ion-button>
+</ion-content>
