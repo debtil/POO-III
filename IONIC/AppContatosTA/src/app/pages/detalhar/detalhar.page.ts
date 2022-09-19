@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { Contato } from 'src/app/models/contato';
-import { ContatoService } from 'src/app/services/contato.service';
+import { ContatoFirebaseService } from 'src/app/services/contato-firebase.service';
 
 @Component({
   selector: 'app-detalhar',
@@ -18,17 +19,36 @@ export class DetalharPage implements OnInit {
   dataNascimento: string;
   data: string;
   edicao: boolean = true;
-  constructor(private router: Router, private alertController: AlertController, private contatoService: ContatoService) { }
+  formCadastrar: FormGroup;
+  isSubmitted: boolean = false;
+  constructor(private formBuilder: FormBuilder, private loadingCtrl: LoadingController, private contatoFS: ContatoFirebaseService, private router: Router, private alertController: AlertController) { }
 
   ngOnInit() {
     this.data = new Date().toISOString();
     const nav = this.router.getCurrentNavigation();
     this.contato = nav.extras.state.objeto;
-    this.nome = this.contato.nome;
-    this.telefone = this.contato.telefone;
-    this.genero = this.contato.genero;
-    this.dataNascimento = this.contato.dataNascimento;
-    //nome: [this.contato.nome, [Validators.required]]
+    console.log(this.contato);
+    this.formCadastrar = this.formBuilder.group({
+      nome:[this.contato.nome ,[Validators.required]],
+      telefone:[this.contato.telefone,[Validators.required, Validators.minLength(10)]],
+      genero:[this.contato.genero,[Validators.required]],
+      data_nascimento:[this.contato.dataNascimento ,[Validators.required]]
+    });
+  }
+
+  submitForm(): boolean{
+    this.isSubmitted = true;
+    if(!this.formCadastrar.valid){
+      this.presentAlert("Agenda", "Erro",
+      "Todos os campos são Obrigatórios!");
+      return false;
+    }else{
+      this.editar();
+    }
+  }
+
+  get errorControl(){
+    return this.formCadastrar.controls;
   }
 
   alterarEdicao(): void{
@@ -40,17 +60,15 @@ export class DetalharPage implements OnInit {
   }
 
   editar(){
-    this.dataNascimento = this.dataNascimento.split('T')[0];
-    if(this.validar(this.nome) && (this.validar(this.telefone)) && (this.validar(this.genero)) && (this.validar(this.dataNascimento))){ 
-      if(this.contatoService.editar(this.contato, this.nome, this.telefone, this.genero, this.dataNascimento)){
-        this.presentAlert("Agenda", "Sucesso", "Edição realizada com sucesso!");
+    this.contatoFS.editarContato(this.formCadastrar.value, this.contato.id)
+    .then(() => {
+      this.presentAlert("Agenda", "Sucesso", "Edição realizada com sucesso!");
         this.router.navigate(["/home"]);
-      }else{
-        this.presentAlert("Agenda", "Erro", "Contato não encontrado!");
-      }
-    }else{
-      this.presentAlert("Agenda", "Erro", "Todos os campos são obrigatórios!");
-    }
+    })
+    .catch((error) =>{
+      this.presentAlert("Agenda", "Erro", "Contato não encontrado!");
+      console.log(error);
+    })
   }
 
   excluir(){
@@ -66,12 +84,18 @@ export class DetalharPage implements OnInit {
   }
 
   private excluirContato(): void{
-    if(this.contatoService.excluir(this.contato)){
+    this.showLoading("Aguarde...", 10000);
+    this.contatoFS.excluirContato(this.contato)
+    .then(() => {
+      this.loadingCtrl.dismiss();
       this.presentAlert("Contato", "Sucesso", "Exclusão realizada com sucesso!");
       this.router.navigate(["/home"]);
-    }else{
+    })
+    .catch((error) => {
+      this.loadingCtrl.dismiss();
       this.presentAlert("Contato", "Erro", "Contato não encontrado!");
-    }
+      console.log(error);
+    })
   }
 
     // no trabalho precisa estar em um service
@@ -106,5 +130,13 @@ export class DetalharPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  async showLoading(mensagem: string, duracao: number) {
+    const loading = await this.loadingCtrl.create({
+      message: mensagem,
+      duration: duracao,
+    });
+    loading.present();
   }
 }

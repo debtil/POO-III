@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
-import { Contato } from '../../models/contato';
-import { ContatoService } from '../../services/contato.service';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { ContatoFirebaseService } from 'src/app/services/contato-firebase.service';
 
 @Component({
   selector: 'app-cadastrar',
@@ -15,7 +14,7 @@ export class CadastrarPage implements OnInit {
   formCadastrar: FormGroup;
   isSubmitted: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private alertController: AlertController, private router: Router, private contatoService: ContatoService) { }
+  constructor(private loadingCtrl: LoadingController, private formBuilder: FormBuilder, private contatoFS: ContatoFirebaseService, private alertController: AlertController, private router: Router) { }
 
   ngOnInit() {
     this.formCadastrar = this.formBuilder.group({
@@ -42,10 +41,20 @@ export class CadastrarPage implements OnInit {
   }
 
   private cadastrar(): void {
+      this.showLoading("Aguarde...", 10000);
       
-      this.contatoService.inserir(this.formCadastrar.value);
-      this.presentAlert("Agenda", "Sucesso", "Cadastro Realizado com êxito!");
+      this.contatoFS.inserirContato(this.formCadastrar.value)
+
+      .then(() => {
+        this.loadingCtrl.dismiss();
+        this.presentAlert("Agenda", "Sucesso", "Cadastro Realizado com êxito!");
       this.router.navigate(["/home"]);
+      })
+      .catch((error) => {
+        this.loadingCtrl.dismiss();
+        this.presentAlert("Agenda", "Erro", "Erro ao realizar o Cadastro!");
+        console.log(error);
+      })
   }
 
   async presentAlert(cabecalho:string, subcabecalho:string, mensagem:string) {
@@ -57,5 +66,13 @@ export class CadastrarPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  async showLoading(mensagem: string, duracao: number) {
+    const loading = await this.loadingCtrl.create({
+      message: mensagem,
+      duration: duracao,
+    });
+    loading.present();
   }
 }
