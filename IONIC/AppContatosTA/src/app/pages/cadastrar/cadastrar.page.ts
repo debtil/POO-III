@@ -26,6 +26,14 @@ export class CadastrarPage implements OnInit {
     this.data = new Date().toISOString();
   }
 
+  async showLoading(mensagem: string, duracao: number) {
+    const loading = await this.loadingCtrl.create({
+      message: mensagem,
+      duration: duracao,
+    });
+    loading.present();
+  }
+
   get errorControl(){
     return this.formCadastrar.controls;
   }
@@ -41,7 +49,7 @@ export class CadastrarPage implements OnInit {
   }
 
   private cadastrar(): void {
-      this.showLoading("Aguarde...", 10000);
+      this.showLoading("Aguarde...", 1000);
       
       this.contatoFS.inserirContato(this.formCadastrar.value)
 
@@ -66,13 +74,5 @@ export class CadastrarPage implements OnInit {
     });
 
     await alert.present();
-  }
-
-  async showLoading(mensagem: string, duracao: number) {
-    const loading = await this.loadingCtrl.create({
-      message: mensagem,
-      duration: duracao,
-    });
-    loading.present();
   }
 }
