@@ -13,6 +13,8 @@ export class CadastrarPage implements OnInit {
   data: string;
   formCadastrar: FormGroup;
   isSubmitted: boolean = false;
+  event: any;
+  imagem: any;
 
   constructor(private loadingCtrl: LoadingController, private formBuilder: FormBuilder, private contatoFS: ContatoFirebaseService, private alertController: AlertController, private router: Router) { }
 
@@ -21,9 +23,14 @@ export class CadastrarPage implements OnInit {
       nome: ["",[Validators.required]],
       telefone: ["", [Validators.required, Validators.minLength(10)]],
       genero: ["", [Validators.required]],
-      dataNascimento: ["", [Validators.required]]
+      dataNascimento: ["", [Validators.required]],
+      imagem: ["", [Validators.required]]
     });
     this.data = new Date().toISOString();
+  }
+
+  uploadFIle(imagem: any){
+    this.imagem = imagem.files;
   }
 
   async showLoading(mensagem: string, duracao: number) {
@@ -51,7 +58,7 @@ export class CadastrarPage implements OnInit {
   private cadastrar(): void {
       this.showLoading("Aguarde...", 1000);
       
-      this.contatoFS.inserirContato(this.formCadastrar.value)
+      this.contatoFS.enviarImagem(this.imagem, this.formCadastrar.value)
 
       .then(() => {
         this.loadingCtrl.dismiss();

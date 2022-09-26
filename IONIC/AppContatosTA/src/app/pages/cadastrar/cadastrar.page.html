@@ -42,6 +42,12 @@
           <span *ngIf="errorControl.dataNascimento.errors?.required">Data de Nascimento é Obrigatório!</span>
         </ion-item>
 
+        <ion-item>
+          <ion-button size="default" color="success" shape="round">
+            <input type="file" (change)="uploadFIle($event.target)" formControlName="imagem">
+          </ion-button>
+        </ion-item>
+
       <ion-button expand="block" type="submit" color="secondary">Cadastrar</ion-button>
     </form>
   </ion-list>
