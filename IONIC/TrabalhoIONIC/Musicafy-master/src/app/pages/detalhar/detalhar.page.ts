@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Musica } from 'src/app/models/musica';
-import { MusicaService } from 'src/app/services/musicaService';
+import { MusicaFirebaseService } from 'src/app/services/musica-firebase.service';
 
 @Component({
   selector: 'app-detalhar',
@@ -11,121 +13,121 @@ import { MusicaService } from 'src/app/services/musicaService';
 })
 export class DetalharPage implements OnInit {
   musica: Musica;
-  nome: string;
-  cantor: string;
-  genero: string;
-  nomeAlbum: string;
-  album: string;
-  plataforma:string;
-  nota: number;
-  anoLancamento: string;
   data: string;
   edicao: boolean = true;
-
-  musicas: Musica[];
+  isSubmitted: boolean = false;
+  formCadastrar: FormGroup;
 
   constructor(private router: Router,
-    private musicaService: MusicaService, private alertController:AlertController) {
-    this.musicas = this.musicaService.musicas;
+    private musicaFS: MusicaFirebaseService, private formBuilder: FormBuilder, private alertController: AlertController) {
   }
 
   ngOnInit() {
+    this.data = new Date().toISOString();
     const nav = this.router.getCurrentNavigation();
     this.musica = nav.extras.state.objeto;
-    this.data = new Date().toISOString();
-    this.nome = this.musica.nome;
-    this.cantor = this.musica.cantor;
-    this.genero = this.musica.genero;
-    this.nomeAlbum = this.musica.nomeAlbum;
-    this.album = this.musica.album;
-    this.plataforma = this.musica.plataforma;
-    this.nota = this.musica.nota;
-    this.anoLancamento = this.musica.anoLancamento;
+    this.formCadastrar = this.formBuilder.group({
+      nome: [this.musica.nome, [Validators.required]],
+      cantor: [this.musica.cantor, [Validators.required]],
+      nomeAlbum: [this.musica.nomeAlbum, [Validators.required]],
+      genero: [this.musica.genero, [Validators.required]],
+      plataforma: [this.musica.plataforma, [Validators.required]],
+      nota: [this.musica.nota, [Validators.required, Validators.min(0), Validators.max(10)]],
+      anoLancamento: [this.musica.anoLancamento, [Validators.required]],
+    })
   }
 
+  cancel() {
+    this.router.navigateByUrl("/inicio");
+  }
 
-  alterarEdicao(){
-    if(this.edicao == true){
-      this.edicao = false;
+  submitForm(): boolean{
+    this.isSubmitted = true;
+    if(!this.formCadastrar.valid){
+      this.presentAlert("MusicaFy", "Erro", "Todos os campos são obrigatórios");
+      return false;
     }else{
+      this.editar();
+    }
+  }
+
+  alterarEdicao(): void{
+    if(this.edicao == false){
       this.edicao = true;
+    }else{
+      this.edicao = false;
     }
   }
 
   editar(){
-   if((this.validar(this.nome)) && this.validar(this.cantor) && this.validar(this.album) &&
-   this.validar(this.genero) && this.validar(this.plataforma) &&
-    this.nota >= 0 && this.nota <= 10  && this.validar(this.anoLancamento)){
-      if(this.musicaService.editar(this.musica, this.nome,
-        this.cantor, this.nomeAlbum, this.album, this.genero,
-        this.plataforma, this.nota, this.anoLancamento)){
-          this.presentAlert("Musicafy", "Sucesso",
-           "Dados da Música Editados!");
-          this.router.navigate(["/home"]);
-      }}else{
-        if(this.nota < 0 || this.nota > 10){
-          this.presentAlert("Musicafy ", "Erro", "A Nota deve estar no Intervalo entre 0 e 10!");
-        }else{
-          this.presentAlert("Musicafy ", "Erro", "Todos os campos são Obrigatórios!");
-        }
-   }
+    this.musicaFS.editarMusica(this.formCadastrar.value, this.musica.id)
+    .then(() => {
+      this.presentAlert("MusicaFy", "Sucesso", "Edição realizada!");
+      this.router.navigate(['/inicio']);
+    })
+    .catch((error) => {
+      this.presentAlert("MusicaFy", "Error", "Erro ao realizar a edição");
+      console.log(error);
+    })
   }
 
-  private validar(campo: any): boolean{
-    if(!campo){
-      return false;
-    }
-    return true;
+  excluir(): void{
+    this.presentAlertConfirm("MusicaFy", "Excluir", "Você realmente deseja excluir essa música?");
   }
 
-  cancel() {
-    this.router.navigateByUrl("/inicio")
+  excluirMusica(){
+    this.musicaFS.excluirMusica(this.musica)
+    .then(() => {
+      this.presentAlert("MusicaFy", "Sucesso", "Música excluida com sucesso!");
+      this.router.navigate(['/home']);
+    })
+    .catch((error) => {
+      this.presentAlert("MusicaFy", "Error", "Erro ao realizar a exclusão");
+      console.log(error);
+    })
   }
 
-  excluir(){
-    this.presentAlertConfirm("Você Realmente Deseja Excluir a Musica?");
+  irParaDetalhar(musica: Musica){
+    this.router.navigateByUrl("/detalhar",
+    {state: {objeto:musica}});
   }
 
-  async presentAlert(header: string, subHeader: string,
-    message: string) {
+  async presentAlert(cabecalho: string, subcabecalho: string,
+    mensagem: string) {
     const alert = await this.alertController.create({
-      header: header,
-      subHeader: subHeader,
-      message: message,
+      header: cabecalho,
+      subHeader: subcabecalho,
+      message: mensagem,
       buttons: ['OK'],
     });
     await alert.present();
   }
 
-  async presentAlertConfirm(value : string) {
+  async presentAlertConfirm(cabecalho: string,
+    subcabecalho: string, mensagem: string) {
     const alert = await this.alertController.create({
-      header: value,
+      header: cabecalho,
+      subHeader: subcabecalho,
+      message: mensagem,
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-          },
+          text:'Cancelar',
+          role:'cancelar',
+          cssClass:'secondary',
+          handler: ()=>{
+            console.log("Cancelou")
+          }
         },
         {
-          text: 'OK',
+          text:'Confirmar',
           role: 'confirm',
-          handler: () => {
-            this.excluirMusica()
-          },
-        },
+          handler: ()=>{
+           this.excluirMusica();
+          }
+        }
       ],
     });
     await alert.present();
-  }
-
-  private excluirMusica(){
-    if(this.musicaService.excluir(this.musica)){
-      this.presentAlert("Musicafy", "Excluir", "Exclusão Realizada");
-      this.router.navigate(["/home"]);
-    }else{
-      this.presentAlert("Musicafy", "Excluir", "Musica Não Encontrada!");
-    }
   }
 }
 

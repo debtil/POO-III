@@ -10,12 +10,12 @@ export class Musica {
   private _anoLancamento: string;
 
   constructor(nome: string, cantor: string,
-    nomeAlbum: string, album: string, genero: string,
+    nomeAlbum: string, genero: string,
     plataforma: string, nota: number, anoLancamento: string){
     this._nome = nome;
     this._cantor = cantor;
     this._nomeAlbum = nomeAlbum;
-    this._album = album;
+    
     this._genero = genero;
     this._plataforma = plataforma;
     this._nota = nota;

@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonModal } from '@ionic/angular';
+import { AlertController, IonModal } from '@ionic/angular';
 import { Musica } from 'src/app/models/musica';
-import { MusicaService } from 'src/app/services/musicaService';
+import { MusicaFirebaseService } from 'src/app/services/musica-firebase.service';
+
 
 @Component({
   selector: 'app-conteudo',
@@ -11,36 +13,27 @@ import { MusicaService } from 'src/app/services/musicaService';
 })
 export class ConteudoPage implements OnInit {
   musica: Musica;
-  nome: string;
-  cantor: string;
-  genero: string;
-  album: string;
-  nomeAlbum: string;
-  plataforma:string;
-  nota: number;
-  anoLancamento: string;
   data: string;
   edicao: boolean = true;
+  isSubmitted: boolean = false;
+  formCadastrar: FormGroup;
 
-  musicas: Musica[];
-
-  constructor(private router: Router,
-    private musicaService: MusicaService) {
-    this.musicas = this.musicaService.musicas;
+  constructor(private router: Router, private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
+    this.data = new Date().toISOString();
     const nav = this.router.getCurrentNavigation();
     this.musica = nav.extras.state.objeto;
-    this.data = new Date().toISOString();
-    this.nome = this.musica.nome;
-    this.cantor = this.musica.cantor;
-    this.genero = this.musica.genero;
-    this.album = this.musica.album;
-    this.nomeAlbum = this.musica.nomeAlbum;
-    this.plataforma = this.musica.plataforma;
-    this.nota = this.musica.nota;
-    this.anoLancamento = this.musica.anoLancamento;
+    this.formCadastrar = this.formBuilder.group({
+      nome: [this.musica.nome, [Validators.required]],
+      cantor: [this.musica.cantor, [Validators.required]],
+      nomeAlbum: [this.musica.nomeAlbum, [Validators.required]],
+      genero: [this.musica.genero, [Validators.required]],
+      plataforma: [this.musica.plataforma, [Validators.required]],
+      nota: [this.musica.nota, [Validators.required, Validators.min(0), Validators.max(10)]],
+      anoLancamento: [this.musica.anoLancamento, [Validators.required]],
+    })
   }
 
   cancel() {

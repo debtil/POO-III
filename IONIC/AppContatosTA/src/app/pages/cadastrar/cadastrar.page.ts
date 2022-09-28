@@ -16,7 +16,8 @@ export class CadastrarPage implements OnInit {
   event: any;
   imagem: any;
 
-  constructor(private loadingCtrl: LoadingController, private formBuilder: FormBuilder, private contatoFS: ContatoFirebaseService, private alertController: AlertController, private router: Router) { }
+  constructor(private loadingCtrl: LoadingController, private formBuilder: FormBuilder, 
+    private contatoFS: ContatoFirebaseService, private alertController: AlertController, private router: Router) { }
 
   ngOnInit() {
     this.formCadastrar = this.formBuilder.group({
@@ -55,7 +56,7 @@ export class CadastrarPage implements OnInit {
     }
   }
 
-  private cadastrar(): void {
+  private cadastrar(): void {         
       this.showLoading("Aguarde...", 1000);
       
       this.contatoFS.enviarImagem(this.imagem, this.formCadastrar.value)

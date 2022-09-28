@@ -2,7 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonModal } from '@ionic/angular';
 import { Musica } from 'src/app/models/musica';
-import { MusicaService } from 'src/app/services/musicaService';
+import { MusicaFirebaseService } from 'src/app/services/musica-firebase.service';
+
 
 @Component({
   selector: 'app-folder',
@@ -16,8 +17,19 @@ export class FolderPage{
   musicas: Musica[];
 
   constructor(private router: Router,
-    private musicaService: MusicaService) {
-    this.musicas = this.musicaService.musicas;
+    private musicaFS: MusicaFirebaseService) {
+      this.carregarMusicas();
+  }
+
+  carregarMusicas(){
+    this.musicaFS.getMusicas().subscribe(res =>{
+      this.musicas = res.map(e =>{
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data() as Musica
+        } as Musica;
+      });
+    });
   }
 
   cancel() {

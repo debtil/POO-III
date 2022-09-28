@@ -20,25 +20,24 @@
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
-      <ion-content class="ion-padding">
+
+  <ion-content [fullscreen] = "true">
+    <ion-item><ion-label size="large">Adicionar Música</ion-label></ion-item>
+    <ion-list>
+      <form>
+        <ion-item><ion-input disabled="{{edicao}}" placeholder="Nome" formControlName="nome"></ion-input></ion-item>
+  
+        <ion-item><ion-input disabled="{{edicao}}" placeholder="Cantor" formControlName="cantor"></ion-input></ion-item>
+        
         <ion-item>
-          <ion-label>Nome: </ion-label>
-          <ion-input disabled="{{edicao}}" [(ngModel)]="nome"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label>Artista: </ion-label>
-          <ion-input disabled="{{edicao}}" [(ngModel)]="cantor"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-select disabled="{{edicao}}" [(ngModel)]="nomeAlbum">
+          <ion-select disabled="{{edicao}}" placeholder="Album" formControlName="nomeAlbum">
             <ion-select-option value="Single">Single</ion-select-option>
             <ion-select-option value="Album">Album</ion-select-option>
           </ion-select>
-          <ion-input disabled="{{edicao}}" *ngIf="(this.nomeAlbum=='Album')" [(ngModel)]="album" class="local"></ion-input>
         </ion-item>
+  
         <ion-item>
-          <ion-label>Gênero: </ion-label>
-          <ion-select disabled="{{edicao}}" [(ngModel)]="genero">
+          <ion-select disabled="{{edicao}}" placeholder="Selecione o Genero" formControlName="genero">
             <ion-select-option value="Pagode">Pagode</ion-select-option>
             <ion-select-option value="Rap">Rap</ion-select-option>
             <ion-select-option value="Rock">Rock</ion-select-option>
@@ -49,9 +48,9 @@
             <ion-select-option value="Reggae">Reggae</ion-select-option>
           </ion-select>
         </ion-item>
+  
         <ion-item>
-          <ion-label>Plataforma: </ion-label>
-          <ion-select disabled="{{edicao}}" [(ngModel)]="plataforma" [multiple]="true">
+          <ion-select disabled="{{edicao}}" placeholder="Plataforma:" formControlName="plataforma" [multiple]="true">
             <ion-select-option value="Spotify">Spotify</ion-select-option>
             <ion-select-option value="Youtube">Youtube Music</ion-select-option>
             <ion-select-option value="Deezer">Deezer</ion-select-option>
@@ -59,17 +58,20 @@
             <ion-select-option value="Tidal">Tidal</ion-select-option>
           </ion-select>
         </ion-item>
+        
+        <ion-item><ion-input disabled="{{edicao}}" placeholder="Nota [0-10]" formControlName="nota"></ion-input></ion-item>
+  
         <ion-item>
-          <ion-label>Nota: </ion-label>
-          <ion-input disabled="{{edicao}}" [(ngModel)]="nota"></ion-input>
-        </ion-item>
-        <ion-item disabled="{{edicao}}">
-          <ion-label>Ano de lancamento: </ion-label>
-          <ion-datetime-button disabled="{{edicao}}"  datetime="datetime" slot="end"></ion-datetime-button>
+          <ion-label>Ano de lancamento:</ion-label>
+          <ion-datetime-button datetime="year" slot="end"></ion-datetime-button>
           <ion-modal [keepContentsMounted]="true">
             <ng-template>
-              <ion-datetime id="datetime" max="{{data}}" presentation="year" [(ngModel)]="anoLancamento"></ion-datetime>
+              <ion-datetime disabled="{{edicao}}" id="year" max="{{data}}" presentation="year" formControlName="anoLancamento"></ion-datetime>
             </ng-template>
           </ion-modal>
         </ion-item>
+      </form>
+    </ion-list>
+    <h1></h1>
+  </ion-content>
 </ion-content>

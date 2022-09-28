@@ -18,11 +18,11 @@ export class MusicaFirebaseService {
   }
 
   inserirMusica(musica: Musica){
-    return this.angularFirestore.collection(this.PATH).add({nome: musica.nome, cantor: musica.cantor, genero: musica.genero, album: musica.album, nomeAlbum: musica.nomeAlbum, plataforma: musica.plataforma, nota: musica.nota, anoLancamento: musica.anoLancamento});
+    return this.angularFirestore.collection(this.PATH).add({nome: musica.nome, cantor: musica.cantor, genero: musica.genero, nomeAlbum: musica.nomeAlbum, plataforma: musica.plataforma, nota: musica.nota, anoLancamento: musica.anoLancamento});
   }
 
   editarMusica(musica: Musica, id: string){
-    return this.angularFirestore.collection(this.PATH).doc(id).update({nome: musica.nome, cantor: musica.cantor, genero: musica.genero, album: musica.album, nomeAlbum: musica.nomeAlbum, plataforma: musica.plataforma, nota: musica.nota, anoLancamento: musica.anoLancamento});
+    return this.angularFirestore.collection(this.PATH).doc(id).update({nome: musica.nome, cantor: musica.cantor, genero: musica.genero, nomeAlbum: musica.nomeAlbum, plataforma: musica.plataforma, nota: musica.nota, anoLancamento: musica.anoLancamento});
   }
   excluirMusica(musica: Musica){
     return this.angularFirestore.collection(this.PATH).doc(musica.id).delete();
