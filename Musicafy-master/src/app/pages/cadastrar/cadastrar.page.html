@@ -1,0 +1,98 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+      <ion-toolbar>
+        <ion-title size="large" (click)="cancel()" class="douradoTitulo">Musicafy</ion-title>
+      </ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen] = "true">
+  <ion-item><ion-label size="large">Adicionar Música</ion-label></ion-item>
+  <ion-list>
+    <form [formGroup]="formCadastro" (ngSubmit)="submitForm()">
+      <ion-item>
+        <ion-input placeholder="Nome" formControlName="nome"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="((errorControl.nome.touched) || (errorControl.nome.dirty) && errorControl.nome.errors)">
+        <span *ngIf="errorControl.nome.errors?.required">Nome é Obrigatório!</span>
+      </ion-item>
+      
+      <ion-item>
+        <ion-input placeholder="Cantor" formControlName="cantor"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="((errorControl.cantor.touched) || (errorControl.cantor.dirty) && errorControl.cantor.errors)">
+        <span *ngIf="errorControl.cantor.errors?.required">Cantor é Obrigatório!</span>
+      </ion-item>
+
+      <ion-item>
+        <ion-select placeholder="Album" formControlName="album">
+          <ion-select-option value="Single">Single</ion-select-option>
+          <ion-select-option value="Album">Album</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="((errorControl.album.touched) || (errorControl.album.dirty) && errorControl.album.errors)">
+        <span *ngIf="errorControl.album.errors?.required">Album é Obrigatório!</span>
+      </ion-item>
+
+      <ion-item>
+        <ion-select placeholder="Selecione o Genero" formControlName="genero">
+          <ion-select-option value="Pagode">Pagode</ion-select-option>
+          <ion-select-option value="Rap">Rap</ion-select-option>
+          <ion-select-option value="Rock">Rock</ion-select-option>
+          <ion-select-option value="HipHop">Hip Hop</ion-select-option>
+          <ion-select-option value="PoP">PoP</ion-select-option>
+          <ion-select-option value="Lofi">Lofi</ion-select-option>
+          <ion-select-option value="Jazz">Jazz</ion-select-option>
+          <ion-select-option value="Reggae">Reggae</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="((errorControl.genero.touched) || (errorControl.genero.dirty) && errorControl.genero.errors)">
+        <span *ngIf="errorControl.genero.errors?.required">Genêro é Obrigatório!</span>
+      </ion-item>
+
+      <ion-item>
+        <ion-select placeholder="Plataforma:" formControlName="plataforma" [multiple]="true">
+          <ion-select-option value="Spotify">Spotify</ion-select-option>
+          <ion-select-option value="Youtube">Youtube Music</ion-select-option>
+          <ion-select-option value="Deezer">Deezer</ion-select-option>
+          <ion-select-option value="Amazon">Amazon Music</ion-select-option>
+          <ion-select-option value="Tidal">Tidal</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="((errorControl.plataforma.touched) || (errorControl.plataforma.dirty) && errorControl.plataforma.errors)">
+        <span *ngIf="errorControl.plataforma.errors?.required">Plataforma é Obrigatória!</span>
+      </ion-item>
+
+      <ion-item>
+        <ion-input placeholder="Nota [0-10]" formControlName="nota"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="((errorControl.nota.touched) || (errorControl.nota.dirty) && errorControl.nota.errors)">
+        <span *ngIf="errorControl.nota.errors?.required">Nota é Obrigatória!</span>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Ano de lancamento:</ion-label>
+        <ion-datetime-button datetime="year" slot="end"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="year" max="{{data}}" presentation="year" formControlName="anoLancamento"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+      <ion-item *ngIf="((errorControl.anoLancamento.touched) || (errorControl.anoLancamento.dirty) && errorControl.anoLancamento.errors)">
+        <span *ngIf="errorControl.anoLancamento.errors?.required">Ano de lançamento é Obrigatório!</span>
+      </ion-item>
+
+      <ion-item>
+        <ion-button size="default" color="success" shape="round">
+          <input type="file" (change)="uploadFile($event.target)" formControlName="imagem">
+        </ion-button>
+      </ion-item>
+
+      <ion-button expand="block" type="submit" color="tertiary"><b>Cadastrar Musica</b></ion-button>
+    </form>
+  </ion-list>
+</ion-content>
