@@ -27,7 +27,7 @@ export class MusicaFirebaseService {
 
     editarMusica(musica: Musica, id: string){
       return this.angularFirestore.collection(this.PATH).doc(id).update({nome: musica.nome, cantor: musica.cantor, genero: musica.genero, album: musica.album, 
-        plataforma: musica.plataforma, nota: musica.nota, anoLancamento: musica.anoLancamento});
+        plataforma: musica.plataforma, nota: musica.nota, anoLancamento: musica.anoLancamento, downloadURL: musica.downloadURL});
     }
 
     excluirMusica(musica: Musica){
@@ -53,6 +53,32 @@ export class MusicaFirebaseService {
         })
       ).subscribe();
       return task;
+    }
+
+    ReenviarImagem(imagem: any, musica: Musica, id: string){
+      const file = imagem.item(0);
+      if(file.type.split('/')[0] !== 'image'){
+        console.error('Tipo Não Suportado');
+        return;
+      }
+      const path = `images/${new Date().getTime()}_${file.name}`;
+      const fileRef = this.angularFireStorage.ref(path);
+      let task = this.angularFireStorage.upload(path, file);
+      task.snapshotChanges().pipe(
+        finalize(()=>{
+          let uploadedFileURL = fileRef.getDownloadURL();
+          uploadedFileURL.subscribe((resp) => {
+            musica.downloadURL = resp;
+            this.editarMusica(musica, id);
+          })
+        })
+      ).subscribe();
+      return task;
+    }
+
+    editarMusicaSimg(musica: Musica, id: string){
+      return this.angularFirestore.collection(this.PATH).doc(id).update({nome: musica.nome, cantor: musica.cantor, genero: musica.genero, album: musica.album,
+        plataforma: musica.plataforma, nota: musica.nota, anoLancamento: musica.anoLancamento});
     }
 }
 

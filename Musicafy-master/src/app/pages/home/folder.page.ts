@@ -39,4 +39,9 @@ export class FolderPage{
     this.router.navigateByUrl("/detalhar",
     {state: {objeto:musica}});
   }
+
+  irParaConteudo(musica: Musica){
+    this.router.navigateByUrl("/conteudo",
+    {state: {objeto:musica}});
+  }
 }

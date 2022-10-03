@@ -18,7 +18,10 @@
           <ion-avatar style="margin-right: 15px;">
             <img src="{{musica.downloadURL}}">
           </ion-avatar>
-          <ion-label (click)="irParaDetalhar(musica)" class="nomeMusica">{{musica.nome}}</ion-label>
+          <ion-label (click)="irParaConteudo(musica)" class="nomeMusica">{{musica.nome}}</ion-label>
+          <ion-item-option color= "tertiary" (click)="irParaDetalhar(musica)">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-item-option>
         </ion-item>
       </ion-item-sliding>
   </ion-list>

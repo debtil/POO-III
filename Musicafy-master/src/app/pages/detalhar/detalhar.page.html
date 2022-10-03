@@ -70,6 +70,12 @@
         </ion-modal>
       </ion-item>
 
+      <ion-item disabled="{{edicao}}">
+        <ion-button size="default" color="success" shape="round">
+          <input type="file" (change)="updateFile($event.target)" formControlName="imagem">
+        </ion-button>
+      </ion-item>
+
       <ion-button shape="round" expand="block" color="tertiary" type="submit"><b class="preto">Salvar</b></ion-button>
     </form>
   </ion-list>

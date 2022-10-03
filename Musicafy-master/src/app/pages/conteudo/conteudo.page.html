@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+      <ion-toolbar>
+        <ion-title size="large" (click)="cancel()" class="douradoTitulo">Musicafy</ion-title>
+      </ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen] = "true">
+  <ion-item>
+    <ion-label size="large">Detalhes da Música</ion-label>
+  </ion-item>
+  <ion-list>
+    <form [formGroup]="formConteudo">
+      <ion-item class="container">
+          <img src="{{musica.downloadURL}}">
+      </ion-item>
+      <ion-item>
+        <ion-label class="ion-text-wrap" > <a class="branco">Título:
+        </a><a class="kiwiVariavel">{{musica.nome}}</a> </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label> <a class="branco">Cantor:
+        </a> <a class="kiwiVariavel">{{musica.cantor}}</a> </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label><a class="kiwiVariavel">{{musica.album}}</a> </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label> <a class="branco">Genero:     </a>
+        <a class="kiwiVariavel">{{musica.genero}}</a> </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="ion-text-wrap" > <a class="branco">Disponível em:     </a>
+        <a class="kiwiVariavel">{{musica.plataforma}}</a> </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label> <a class="branco">Nota:     </a>
+        <a class="kiwiVariavel">{{musica.nota}}</a> </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label><a class="branco">Lançado em: </a> </ion-label>
+        <ion-datetime-button disabled= "true" datetime="datetime" slot="end"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetime" max="{{data}}" presentation="year" formControlName="anoLancamento"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+    </form>
